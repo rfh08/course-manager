@@ -9,7 +9,7 @@ class UserMailer < ApplicationMailer
     
     @post = post
     
-    mail to: "s3661033@student.rmit.edu.au", suject: "To webmaster"
+    mail to: "s652643@student.rmit.edu.au", suject: "To webmaster"
     # mail to: "s3579811@student.rmit.edu.au", suject: "To webmaster"
   end
 end

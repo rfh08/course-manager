@@ -1,0 +1,16 @@
+<% provide(:title, 'New category') %>
+<h5>Create a new category</h5>
+
+<div class="row">
+<div class="col-md-6 col-md-offset-3">
+<div style="background-color: #eaeaea; padding:15px;">
+<%= form_for(@category, url: newcate_path) do |f| %>
+ <%= render 'shared/errorcate_messages' %>
+  
+      <%= f.label :name %>
+      <%= f.text_field :name, class: 'form-control' %>
+      <%= f.submit "Create category", class: "btn btn-success" %>
+<% end %>
+ </div>
+</div>
+</div>

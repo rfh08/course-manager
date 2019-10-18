@@ -1,0 +1,30 @@
+<% if @user.errors.any? %>
+  <div id="error_explanation">
+    <div class="alert alert-danger">
+      <p2>Please correct the following errors: </p2>
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+    <br></br>
+    <ul>
+
+    <% @user.errors.full_messages.each do |msg| %>
+    
+      <li><%= msg %></li>
+      
+    <% end %>
+    
+    <% if @user.errors.full_messages.include?("Email is invalid") %>
+     <li>Email Registration only open for RMIT Staff</li>
+     <% end %>
+     
+     <% if @user.errors.full_messages.include?("Password is invalid") %>
+     <li>Password must contains at least a lowercase letter, a uppercase, a digit, a special character and 8+ characters</li>
+     <% end %>
+     <% if @user.errors.full_messages.include?("Password can't be blank") %>
+     <li>Password must contains at least a lowercase letter, a uppercase, a digit, a special character and 8+ characters</li>
+    <% end %>
+
+      </div>
+    </ul>
+  </div>
+<% end %>
+

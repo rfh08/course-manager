@@ -1,0 +1,49 @@
+<% provide(:title, 'Edit user') %>
+<% provide(:button_text, 'Save changes') %>
+<h1>Edit course</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <div style="background-color: #eaeaea; padding:15px;">
+    <%= form_for(@course) do |f| %>
+  <%= render 'shared/errorcourse_messages', object: @course %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :prerequisite %>
+      <%= f.text_field :prerequisite %>
+
+      <%= f.label :description %>
+      <%= f.text_area :description ,size: "30x10" %>
+      
+      <%= f.label "category:" %>       
+      <%= hidden_field_tag "cate_ids[]",nil %>
+      <% Category.all.each do |category| %>
+      <label class = "checkbox-inline">
+      <div class = "checkboxtag">
+      <%= check_box_tag "cate_ids[]", category.id, @course.category_ids.include?(category.id) %>
+      </div>
+      <%= category.name %>
+      </label>
+      <% end %>
+      <br></br>
+      <%= f.label "location:" %>
+      <%= hidden_field_tag "loca_ids[]",nil %>
+      <% Location.all.each do |location| %>
+      <label class = "checkbox-inline">
+      <div class = "checkboxtag">
+      <%= check_box_tag "loca_ids[]", location.id ,@course.location_ids.include?(location.id)%>
+      </div>
+      <%= location.location %>
+      </label>
+      <% end %>
+
+      
+      
+      <br></br>
+      <%= f.submit yield(:button_text), class: "btn btn-success" %>
+    <% end %>
+    </div>
+  </div>
+</div>
+</div>

@@ -1,0 +1,58 @@
+<% provide(:title, @category.name) %>
+      <h5>Courses in <%= @category.name %></h5>
+      
+      
+  <ul class="users">
+  <% @course.each do |course| %>
+  <% if course.category_ids.include?(@category.id)%>
+    <li>
+      <ol class="courses">
+      <div class="row">
+      <div class="left">
+      <div style= "margin-left:13px;"><%= gravatar_for course.user, size: 150 %></div><br>
+      <p3>Coordinator name:</p3><br>
+      <p4><%= link_to course.user.name, course.user %></p4>
+      </div>
+      <div class="col-md-offset-3">
+      <div style="background-color: #eaeaea; padding:20px;  border: 1px solid gray;border-radius: 25px;">
+      <span class="coursename"><%= link_to course.name, course %></span>
+      <span class="prerequisite">Prerequisite: <%= course.prerequisite %></span>
+      <span class="category">Category: 
+      <% course.category_ids.each do |id| %>
+           "<%= link_to Category.find(id).name,Category.find(id) %>"
+      <% end %>
+      </span>
+      <span class="location">Location:
+      <% course.location_ids.each do |id| %>
+           "<%= link_to Location.find(id).location,Location.find(id) %>"
+      <% end %>
+      </span>
+    <!---- like ------>
+      <span class = "thumb">
+      <%= link_to like_create_path(id: course.id), class:"like", method: :post, remote: true do %>
+      <button type="button" class="btn btn-info" aria-label="Left Align">
+      <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
+      <span class="badge"><%= count_like(course) %></span>
+      </button>
+      <% end %>
+    
+    <!---- dislike ------>
+        
+      <%= link_to dislike_create_path(id: course.id), class:"like", method: :post, remote: true do %>
+      <button type="button" class="btn btn-info" aria-label="Left Align">
+      <span class="glyphicon glyphicon-thumbs-down glyphicon-align-center" aria-hidden="true"></span>
+      <span class="badge"><%= count_dislike(course) %></span>
+      </button>
+      <% end %>
+      </span>
+      <span class="timestamp">
+      Created: <%= time_ago_in_words(course.created_at) %> ago.
+      </span>
+      </div>
+      </div>
+      </div>
+      </ol>
+    </li>
+  <% end %>
+  <% end %>
+</ul>

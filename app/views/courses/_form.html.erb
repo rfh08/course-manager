@@ -1,0 +1,49 @@
+<%= form_for(@course) do |f| %>
+  <%= render 'shared/errorcourse_messages', object: @course %>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+
+      <%= f.label :prerequisite %>
+      <%= f.text_field :prerequisite %>
+
+      <%= f.label :description %>
+      <%= f.text_area :description ,size: "30x10" %>
+      
+      <%= hidden_field_tag "cate_ids[]",nil %>
+      <%= f.label "category:" %>         
+      <% Category.all.each do |category| %>
+      <label class = "checkbox-inline">
+      <div class = "checkboxtag">
+      <%= check_box_tag "cate_ids[]", category.id %>
+      </div>
+      <%= category.name %>
+      </label>
+      <% end %>
+      <br></br>
+      <%= hidden_field_tag "loca_ids[]",nil %>
+      <%= f.label "location:" %>
+      <% Location.all.each do |location| %>
+      <label class = "checkbox-inline">
+      <div class = "checkboxtag">
+      <%= check_box_tag "loca_ids[]", location.id %>
+      </div>
+      <%= location.location %>
+      </label>
+      <% end %>
+      <br></br>
+      
+   <%= f.label :image %>
+ <%= f.file_field :image, accept: 'image/jpeg,image/gif,image/png' %>
+      
+      <br></br>
+      <%= f.submit yield(:button_text), class: "btn btn-success" %>
+    <% end %>
+    
+  <script type="text/javascript">
+  $('#course_image').bind('change', function() {
+    var size_in_megabytes = this.files[0].size/1024/1024;
+    if (size_in_megabytes > 5) {
+      alert('Maximum file size is 5MB. Please choose a smaller file.');
+    }
+  });
+</script>

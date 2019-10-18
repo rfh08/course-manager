@@ -1,0 +1,93 @@
+<% provide(:title, @course.name) %>
+<div class="row">
+    <section class="user_info">
+      <h5>
+        <%= @course.name %>
+      </h5>
+    </section>
+    
+      <ol class="courses">
+      <div class="row">
+      <div class="col-md-8">
+      <span class="prerequisite-show">Prerequisite: <%= @course.prerequisite %></span>
+      <div style="background-color: #eaeaea; padding:20px;  border: 1px solid gray;border-radius: 25px;">
+      <span style = "float:right">
+      <span style = "font-weight: bold;">Course Image:</span><br>
+      <%= image_tag @course.image.url if @course.image? %>
+      </span>
+      <span class="category">Category: 
+      <% @course.category_ids.each do |id| %>
+           "<%= link_to Category.find(id).name,Category.find(id) %>"
+      <% end %>
+      </span>
+      
+      
+      
+      <span class="location">Location:
+      <% @course.location_ids.each do |id| %>
+           "<%= link_to Location.find(id).location,Location.find(id) %>"
+      <% end %>
+      </span>
+      
+      <span class="description">Course Description:</span>
+      <%= @course.description %>
+      
+      
+
+      
+      
+      
+      </div>
+      <br>
+      
+     <%= link_to "Return to Courses List", courses_path, class: " btn btn-lg btn-success" %>
+      
+           
+    <!---- reset ------>
+    
+     <% if logged_in? == true %>
+     <% if @course.user==current_user || current_user.admin?  %>
+     <%= link_to "Edit this course", edit_course_path(@course), class: " btn btn-lg btn-success" %>
+     <% end %>
+     <% if current_user.admin? %>
+     <%= link_to "Delete", @course, method: :delete, class: " btn btn-lg btn-success",
+                                  data: { confirm: "You sure?" } %>
+     <% end %>
+     <% if current_user.admin? %>
+     <%= link_to "Reset votes", reset_vote_path(id: @course.id), method: :post, remote: true, class: " btn btn-lg btn-success" %>
+     <% end %>
+     <% end %>
+     
+    <!---- like ------>
+      <span class = "thumb" style = "margin-top:5px;">
+      <%= link_to like_create_path(id: @course.id), class:"like", method: :post, remote: true do %>
+      <button type="button" class="btn btn-info" aria-label="Left Align">
+      <span class="glyphicon glyphicon-thumbs-up glyphicon-align-center" aria-hidden="true"></span>
+      <span class="badge"><%= count_like(@course) %></span>
+      </button>
+      <% end %>
+    
+    <!---- dislike ------>
+        
+      <%= link_to dislike_create_path(id: @course.id), class:"like", method: :post, remote: true do %>
+      <button type="button" class="btn btn-info" aria-label="Left Align">
+      <span class="glyphicon glyphicon-thumbs-down glyphicon-align-center" aria-hidden="true"></span>
+      <span class="badge"><%= count_dislike(@course) %></span>
+      </button>
+      <% end %>
+      </span>
+
+      
+      
+      </div>
+      <div class="col-md-4">
+      <div style="text-align: center;margin-top:50px;">
+      <div style= "margin-left:13px;"><%= gravatar_for @course.user, size: 150 %></div><br>
+      <p3>Brought to you by:</p3><br>
+      <p4><%= link_to @course.user.name, @course.user %></p4>
+      </div>
+      </div>
+      </div>
+      </ol>
+</div>
+
